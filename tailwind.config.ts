@@ -9,6 +9,10 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+      fontFamily: {
+        geist: ['Geist', 'sans-serif'],
+        'geist-mono': ['GeistMono', 'monospace'],
+      },			
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
