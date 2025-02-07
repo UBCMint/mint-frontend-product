@@ -6,6 +6,7 @@ import {
     ResizablePanelGroup,
 } from '@/components/ui/resizable';
 import RecentButton from '@/components/ui/recent-button';
+import { Input } from "@/components/ui/input";
 
 export default function SelectionSidebar() {
     return (
@@ -20,6 +21,7 @@ export default function SelectionSidebar() {
                         <Cross1 />
                     </CardHeader>
                     <CardContent>
+                        <Input type="search" placeholder="Search" className="pl-10" />
                         <div>
                             <RecentButton
                                 label="Node Name"
