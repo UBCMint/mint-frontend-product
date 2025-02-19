@@ -15,11 +15,11 @@ import Filter from '../filter/page';
 import { MetaDataContext } from '@/context/MetaDataContext';
 
 export default function App() {
-  const { nodes, onNodesChange, edges, setEdges, onEdgesChange } = useContext(MetaDataContext);
+  const { nodes, onNodesChange, edges, setEdges, onEdgesChange, nodeTypes } = useContext(MetaDataContext);
 
-  const nodeTypes = {
-    filterNode: Filter,
-  };
+  // const nodeTypes = {
+  //   filterNode: Filter,
+  // };
 
   // Use correct type for `params`
   const onConnect = useCallback(

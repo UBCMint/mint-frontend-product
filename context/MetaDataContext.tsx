@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, ReactNode } from 'react';
+import { createContext, ReactNode, useState } from 'react';
 import { Node, Edge, OnNodesChange, OnEdgesChange } from '@xyflow/react';
 import { useNodesState, useEdgesState } from '@xyflow/react';
 
@@ -26,6 +26,8 @@ export interface MetaDataContextType {
   edges: Edge[];
   setEdges: React.Dispatch<React.SetStateAction<Edge[]>>;
   onEdgesChange: OnEdgesChange;
+  nodeTypes: string[];
+  setNodeTypes: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 export const MetaDataContext = createContext<MetaDataContextType>({} as MetaDataContextType);
@@ -33,6 +35,7 @@ export const MetaDataContext = createContext<MetaDataContextType>({} as MetaData
 export function MetaDataContextProvider({ children }: MetaDataContextProviderProps): JSX.Element {
   const [nodes, setNodes, onNodesChange] = useNodesState(exampleNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(exampleEdges);
+  const [nodeTypes, setNodeTypes] = useState<string[]>(['filterNode'])
 
   return (
     <MetaDataContext.Provider
@@ -43,6 +46,8 @@ export function MetaDataContextProvider({ children }: MetaDataContextProviderPro
         edges,
         setEdges,
         onEdgesChange,
+        nodeTypes,
+        setNodeTypes
       }}
     >
       {children}
