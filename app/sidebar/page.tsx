@@ -5,9 +5,9 @@ import {
     ResizablePanel,
     ResizablePanelGroup,
 } from '@/components/ui/resizable';
-import RecentButton from '@/components/ui/recent-button';
+import RecentButton from '@/components/sidebar/recent-button';
 import { Input } from "@/components/ui/input";
-import { Categories } from "@/components/ui/categories"
+import { Categories } from "@/components/sidebar/categories"
 
 export default function SelectionSidebar() {
     return (
