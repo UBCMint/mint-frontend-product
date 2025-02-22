@@ -5,9 +5,9 @@ import {
     ResizablePanel,
     ResizablePanelGroup,
 } from '@/components/ui/resizable';
-import RecentButton from '@/components/ui/recent-button';
-import { Input } from "@/components/ui/input";
-import { Categories } from "@/components/ui/categories"
+import RecentButton from '@/app/sidebar/components/recent-button';
+import { Input } from '@/components/ui/input';
+import { Categories } from '@/app/sidebar/components/categories';
 
 export default function SelectionSidebar() {
     return (
@@ -22,7 +22,11 @@ export default function SelectionSidebar() {
                         <Cross1 />
                     </CardHeader>
                     <CardContent>
-                        <Input type="search" placeholder="Search" className="pl-10" />
+                        <Input
+                            type="search"
+                            placeholder="Search"
+                            className="pl-10"
+                        />
                         <div>
                             <RecentButton
                                 label="Node Name"
