@@ -6,46 +6,36 @@ import {
     HoverCardTrigger,
 } from '@/components/ui/hover-card';
 import { InfoCircledIcon } from '@radix-ui/react-icons';
+import DotGrid from '@/components/radix/dotgrid';
 
 interface RecentButtonProps {
     label?: string;
     description?: string;
     draggable?: boolean;
     onDragStart?: (e: React.DragEvent<HTMLDivElement>) => void;
-
 }
 
-const DotGrid = () => (
-    <div className="grid grid-rows-3 grid-cols-2 gap-1 mr-5 h-4">
-        {[...Array(6)].map((_, i) => (
-            <div key={i} className="w-1 h-1 bg-current rounded-full" />
-        ))}
-    </div>
-);
-
+// black info button
 const InfoIcon = () => (
     <div className="w-3 h-3 rounded-full bg-black flex items-center justify-center cursor-pointer">
         <InfoCircledIcon className="w-6 h-6 text-white" />
     </div>
 );
 
-const RecentButton = ({
-    label = 'Node Name',
-    description = 'Node Description Lorem ipsum dolor sitamet',
+const NodeButton = ({
+    label = 'Default Label',
+    description = 'Default Description',
     draggable = false,
-    onDragStart
+    onDragStart,
 }: RecentButtonProps) => {
     return (
-        <div className="w-full max-w-[300px] mb-4" draggable={draggable} onDragStart={onDragStart}>
-            <Button
-                variant="outline"
-                className="w-full h-20 justify-between px-4 flex items-center bg-white hover:bg-white/90"
-            >
+        <div className="w-full" draggable={draggable} onDragStart={onDragStart}>
+            <Button variant="outline" className="w-full h-16 justify-between">
                 <div className="flex items-center">
                     <DotGrid />
-                    <span className="text-2xl font-geist">{label}</span>
+                    <span>{label}</span>
                 </div>
-                <div className="flex items-center h-full">
+                <div>
                     <HoverCard>
                         <HoverCardTrigger asChild>
                             <div className="flex items-center">
@@ -57,14 +47,11 @@ const RecentButton = ({
                             align="center"
                             alignOffset={0}
                             className="relative p-3 max-w-sm drop-shadow-lg"
-                            sideOffset={35}
+                            sideOffset={22}
                         >
-                            <div className="absolute left-0 top-1/2 -translate-x-2 -translate-y-2 w-4 h-4 rotate-45 bg-white border-l border-b border-border" />
-                            <div className="relative z-10 bg-white">
-                                <p className="text-sm text-muted-foreground whitespace-normal font-geist">
-                                    {description}
-                                </p>
-                            </div>
+                            <p className="text-sm text-muted-foreground whitespace-normal font-geist">
+                                {description}
+                            </p>
                         </HoverCardContent>
                     </HoverCard>
                 </div>
@@ -73,4 +60,4 @@ const RecentButton = ({
     );
 };
 
-export default RecentButton;
+export default NodeButton;

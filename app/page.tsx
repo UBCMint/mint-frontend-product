@@ -1,15 +1,19 @@
-import { TypographyH1 } from '@/components/typography/typography';
-import RecentButton from '@/app/sidebar/components/recent-button';
 import AppHeader from '@/components/ui-header/app-header';
 import SettingsBar from '@/components/ui-header/settings-bar';
-
+import Sidebar from '@/components/ui-sidebar/sidebar';
+import ReactFlowView from '@/components/ui-react-flow/react-flow-view';
 export default function Home() {
     return (
-        <div className="flex p-2 flex-col min-h-screen">
-            <AppHeader />
-            <SettingsBar />
+        <div className="h-screen flex flex-col">
+            <div className="flex flex-col">
+                <AppHeader />
+                <SettingsBar />
+            </div>
 
-            <div className="p-8"></div>
+            {/* Bottom section for workspace and sidebar */}
+            <div className="flex-1 flex">
+                <ReactFlowView />
+            </div>
         </div>
     );
 }
