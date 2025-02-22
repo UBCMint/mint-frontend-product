@@ -30,10 +30,10 @@ export default function AppHeader() {
                 {/* help */}
                 <DropdownMenu>
                     <DropdownMenuTrigger>
-                        <Button variant="link" className="flex items-center space-x-1 px-3 py-2">
-                        <span>Help</span>
-                        <ChevronUpIcon className="h-4 w-4" />
-                    </Button>
+                        <div className="flex items-center space-x-1 px-3 py-2">
+                            <span className="text-sm font-medium leading-none">Help</span>
+                            <ChevronUpIcon className="h-4 w-4" />
+                        </div>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="mx-4">
                         <DropdownMenuItem>Getting Started</DropdownMenuItem>
