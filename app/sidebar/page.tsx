@@ -6,9 +6,11 @@ import {
     ResizablePanel,
     ResizablePanelGroup,
 } from '@/components/ui/resizable';
+
 import RecentButton from '@/components/ui/recent-button';
 import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
+import { Categories } from '@/app/sidebar/components/categories';
 
 export default function SelectionSidebar() {
 
@@ -77,6 +79,9 @@ export default function SelectionSidebar() {
                                 onDragStart={(e) => handleDragStart(e, "Node 2")}
                             />
                         </div>
+                        <Categories categoryNumber={1} />
+                        <Categories categoryNumber={2} />
+                        <Categories categoryNumber={3} />
                     </CardContent>
                 </Card>
             </ResizablePanel>
