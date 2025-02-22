@@ -7,6 +7,7 @@ import {
 } from '@/components/ui/resizable';
 import RecentButton from '@/components/ui/recent-button';
 import { Input } from "@/components/ui/input";
+import { Categories } from "@/components/ui/categories"
 
 export default function SelectionSidebar() {
     return (
@@ -32,6 +33,9 @@ export default function SelectionSidebar() {
                                 description="Node Description Lorem Ipsum dolor sitamet Node Description Lorem Ipsum dolor sitamet"
                             />
                         </div>
+                        <Categories categoryNumber={1} />
+                        <Categories categoryNumber={2} />
+                        <Categories categoryNumber={3} />
                     </CardContent>
                 </Card>
             </ResizablePanel>
