@@ -11,10 +11,10 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
-import Filter from '../filter/page';
+// import Filter from '../filter/page';
 import { MetaDataContext } from '@/context/MetaDataContext';
-
-export default function App() {
+import Sidebar from '@/components/ui-sidebar/sidebar';
+export default function ReactFlowView() {
     const { nodes, onNodesChange, edges, setEdges, onEdgesChange, nodeTypes } =
         useContext(MetaDataContext);
 
@@ -42,7 +42,7 @@ export default function App() {
                 <Background />
                 <Controls />
                 <Panel position="top-left">
-                    <h1>React Flow Demo</h1>
+                    <Sidebar />
                 </Panel>
             </ReactFlow>
         </div>

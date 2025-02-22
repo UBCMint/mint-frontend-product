@@ -53,12 +53,13 @@ export function Categories({ categoryName, availableNodes }: CategoriesProps) {
             <div className="w-full h-[1px] bg-gray-200" />
             <CollapsibleContent className="space-y-2">
                 {categoryNodes.map((node, index) => (
-                    <RecentButton
-                        key={index}
-                        label={node.label}
-                        description={node.description}
-                        draggable={true}
-                    />
+                    <div key={index} className="mb-4">
+                        <RecentButton
+                            label={node.label}
+                            description={node.description}
+                            draggable={true}
+                        />
+                    </div>
                 ))}
             </CollapsibleContent>
         </Collapsible>

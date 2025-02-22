@@ -23,17 +23,13 @@ const InfoIcon = () => (
 );
 
 const NodeButton = ({
-    label = 'Node Name',
-    description = 'Node Description Lorem ipsum dolor sitamet',
+    label = 'Default Label',
+    description = 'Default Description',
     draggable = false,
     onDragStart,
 }: RecentButtonProps) => {
     return (
-        <div
-            className="w-full mb-4" // width full, max width 250px, margin bottom 4px, MIGHT CHANGE
-            draggable={draggable}
-            onDragStart={onDragStart}
-        >
+        <div className="w-full" draggable={draggable} onDragStart={onDragStart}>
             <Button variant="outline" className="w-full h-16 justify-between">
                 <div className="flex items-center">
                     <DotGrid />

@@ -10,8 +10,7 @@ import { Input } from '@/components/ui/input';
 import Cross1 from '@/components/radix/cross1';
 import { Categories } from './categories-collapsible';
 import RecentButton from './node-button';
-import { TypographyH2, TypographyH3 } from '../typography/typography';
-
+import { TypographyP } from '../typography/typography';
 // PUT THIS INSIDE THE CONTEXT
 const RecentButtons = ['Low Pass Filter', 'High Pass Filter'];
 
@@ -96,15 +95,17 @@ export default function Sidebar() {
 
                     <CardContent className="overflow-y-auto flex-1">
                         {/* SEARCH INPUT */}
-                        <Input
-                            type="search"
-                            placeholder="Search"
-                            className="pl-8 mb-4"
-                        />
+                        <div className="mb-4">
+                            <Input
+                                type="search"
+                                placeholder="Search"
+                                className="pl-8"
+                            />
+                        </div>
 
                         {/* RECENT BUTTONS */}
                         <div>
-                            <p>Recent</p>
+                            <TypographyP>Recent</TypographyP>
                             {RecentButtons.map((label, index) => {
                                 const nodeData = AvailableNodes.find(
                                     (node) => node.label === label
@@ -112,15 +113,19 @@ export default function Sidebar() {
                                 if (!nodeData) return null;
 
                                 return (
-                                    <RecentButton
-                                        key={index}
-                                        label={nodeData.label}
-                                        description={nodeData.description}
-                                        draggable={true}
-                                        onDragStart={(e) =>
-                                            handleDragStart(e, nodeData.label)
-                                        }
-                                    />
+                                    <div key={index} className="mb-4">
+                                        <RecentButton
+                                            label={nodeData.label}
+                                            description={nodeData.description}
+                                            draggable={true}
+                                            onDragStart={(e) =>
+                                                handleDragStart(
+                                                    e,
+                                                    nodeData.label
+                                                )
+                                            }
+                                        />
+                                    </div>
                                 );
                             })}
                         </div>
@@ -156,7 +161,7 @@ export default function Sidebar() {
                     </CardContent>
                 </Card>
             </ResizablePanel>
-            <ResizableHandle withHandle className="bg-border-none" />
+            <ResizableHandle className="bg-border-none" />
             <ResizablePanel defaultSize={99} />
         </ResizablePanelGroup>
     );
