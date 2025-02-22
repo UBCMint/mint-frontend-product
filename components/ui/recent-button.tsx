@@ -10,6 +10,9 @@ import { InfoCircledIcon } from '@radix-ui/react-icons';
 interface RecentButtonProps {
     label?: string;
     description?: string;
+    draggable?: boolean;
+    onDragStart?: (e: React.DragEvent<HTMLDivElement>) => void;
+
 }
 
 const DotGrid = () => (
@@ -29,9 +32,11 @@ const InfoIcon = () => (
 const RecentButton = ({
     label = 'Node Name',
     description = 'Node Description Lorem ipsum dolor sitamet',
+    draggable = false,
+    onDragStart
 }: RecentButtonProps) => {
     return (
-        <div className="w-full mb-4">
+        <div className="w-full max-w-[300px] mb-4" draggable={draggable} onDragStart={onDragStart}>
             <Button
                 variant="outline"
                 className="w-full h-20 justify-between px-4 flex items-center bg-white hover:bg-white/90"
