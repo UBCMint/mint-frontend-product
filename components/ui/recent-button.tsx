@@ -31,7 +31,7 @@ const RecentButton = ({
     description = 'Node Description Lorem ipsum dolor sitamet',
 }: RecentButtonProps) => {
     return (
-        <div className="w-full max-w-[300px] mb-4">
+        <div className="w-full mb-4">
             <Button
                 variant="outline"
                 className="w-full h-20 justify-between px-4 flex items-center bg-white hover:bg-white/90"
