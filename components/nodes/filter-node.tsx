@@ -29,9 +29,13 @@ const filters = [
         value: 'lowpass',
         label: 'Low Pass',
     },
+    {
+        value: 'bandpass',
+        label: 'Band Pass',
+    },
 ];
 
-export default function Filter() {
+export default function FilterNode() {
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState('');
     return (
@@ -50,7 +54,7 @@ export default function Filter() {
                                 ? filters.find(
                                       (filter) => filter.value === value
                                   )?.label
-                                : 'Select framework...'}
+                                : 'Select filter type...'}
                             <ChevronsUpDown className="opacity-50" />
                         </Button>
                     </PopoverTrigger>

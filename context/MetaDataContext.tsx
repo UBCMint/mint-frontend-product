@@ -3,56 +3,87 @@
 import { createContext, ReactNode, useState } from 'react';
 import { Node, Edge, OnNodesChange, OnEdgesChange } from '@xyflow/react';
 import { useNodesState, useEdgesState } from '@xyflow/react';
+import TestNode from '@/components/nodes/test-node';
+import FilterNode from '@/components/nodes/filter-node';
+import SignalGraphNode from '@/components/nodes/signal-graph-node';
+import SourceNode from '@/components/nodes/source-node';
 
-const exampleNodes: Node[] = [
-  { id: '1', position: { x: 100, y: 100 }, data: { label: 'Node 1' } },
-  { id: '2', position: { x: 100, y: 200 }, data: { label: 'Node 2' } },
-  { id: '3', position: { x: 100, y: 300 }, type: 'filterNode', data: { label: 'Filter Node' } },
-];
+type NodeData = {
+    label?: string;
+};
 
-const exampleEdges: Edge[] = [
-  { id: 'e1-2', source: '1', target: '2' },
-  { id: 'e2-3', source: '2', target: '3' },
-];
+type NodeDefinition = Node<NodeData>;
 
-interface MetaDataContextProviderProps {
-  children: ReactNode;
+type NodeTypes = {
+    source: typeof SourceNode;
+    testNode: typeof TestNode;
+    filterNode: typeof FilterNode;
+    signalGraphNode: typeof SignalGraphNode;
+};
+
+interface MetaDataContextType {
+    nodes: NodeDefinition[];
+    setNodes: React.Dispatch<React.SetStateAction<NodeDefinition[]>>;
+    onNodesChange: OnNodesChange;
+    edges: Edge[];
+    setEdges: React.Dispatch<React.SetStateAction<Edge[]>>;
+    onEdgesChange: OnEdgesChange;
+    nodeTypes: NodeTypes;
+    setNodeTypes: React.Dispatch<React.SetStateAction<NodeTypes>>;
+    addNode: (node: NodeDefinition) => void;
 }
 
-export interface MetaDataContextType {
-  nodes: Node[];
-  setNodes: React.Dispatch<React.SetStateAction<Node[]>>;
-  onNodesChange: OnNodesChange;
-  edges: Edge[];
-  setEdges: React.Dispatch<React.SetStateAction<Edge[]>>;
-  onEdgesChange: OnEdgesChange;
-  nodeTypes: string[];
-  setNodeTypes: React.Dispatch<React.SetStateAction<string[]>>;
-}
+// Default node types configuration
+const DEFAULT_NODE_TYPES: NodeTypes = {
+    source: SourceNode,
+    testNode: TestNode,
+    filterNode: FilterNode,
+    signalGraphNode: SignalGraphNode,
+};
 
-export const MetaDataContext = createContext<MetaDataContextType>({} as MetaDataContextType);
+// Create context with proper typing
+export const MetaDataContext = createContext<MetaDataContextType>({
+    nodes: [],
+    setNodes: () => {},
+    onNodesChange: () => {},
+    edges: [],
+    setEdges: () => {},
+    onEdgesChange: () => {},
+    nodeTypes: DEFAULT_NODE_TYPES,
+    setNodeTypes: () => {},
+    addNode: () => {},
+});
 
-export function MetaDataContextProvider({ children }: MetaDataContextProviderProps): JSX.Element {
-  const [nodes, setNodes, onNodesChange] = useNodesState(exampleNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(exampleEdges);
-  const [nodeTypes, setNodeTypes] = useState<string[]>(['filterNode'])
+export function MetaDataContextProvider({
+    children,
+}: {
+    children: ReactNode;
+}): JSX.Element {
+    const [nodes, setNodes, onNodesChange] = useNodesState<NodeDefinition>([]);
+    const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+    const [nodeTypes, setNodeTypes] = useState<NodeTypes>(DEFAULT_NODE_TYPES);
 
-  return (
-    <MetaDataContext.Provider
-      value={{
-        nodes,
-        setNodes,
-        onNodesChange,
-        edges,
-        setEdges,
-        onEdgesChange,
-        nodeTypes,
-        setNodeTypes
-      }}
-    >
-      {children}
-    </MetaDataContext.Provider>
-  );
+    const addNode = (newNode: NodeDefinition) => {
+        setNodes((prev) => [...prev, newNode]);
+    };
+
+    return (
+        <MetaDataContext.Provider
+            value={{
+                nodes,
+                setNodes,
+                onNodesChange,
+                edges,
+                setEdges,
+                onEdgesChange,
+                nodeTypes,
+                setNodeTypes,
+                addNode,
+            }}
+        >
+            {children}
+        </MetaDataContext.Provider>
+    );
 }
 
 export default MetaDataContextProvider;
