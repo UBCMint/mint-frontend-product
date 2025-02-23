@@ -3,6 +3,9 @@ import localFont from 'next/font/local';
 import './globals.css';
 import MetaDataContextProvider from '@/context/MetaDataContext';
 
+import AppHeader from '@/components/ui-header/app-header';
+import SettingsBar from '@/components/ui-header/settings-bar';
+
 const geistSans = localFont({
     src: './fonts/GeistVF.woff',
     variable: '--font-geist-sans',
@@ -30,7 +33,16 @@ export default function RootLayout({
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
                 <MetaDataContextProvider>
-                    {children}  
+                    <div className="h-screen flex flex-col">
+                        {/* Top section for header and settings bar */}
+                        <div className="flex flex-col">
+                            <AppHeader />
+                            <SettingsBar />
+                        </div>
+
+                        {/* Bottom section for workspace and sidebar */}
+                        <div className="flex-1 flex">{children}</div>
+                    </div>
                 </MetaDataContextProvider>
             </body>
         </html>

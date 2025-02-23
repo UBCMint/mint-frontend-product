@@ -11,36 +11,35 @@ import Cross1 from '@/components/radix/cross1';
 import { Categories } from './categories-collapsible';
 import RecentButton from './node-button';
 import { TypographyP } from '../typography/typography';
+import { MetaDataContext } from '@/context/MetaDataContext';
+import { useContext } from 'react';
+import { useReactFlow } from '@xyflow/react';
+
 // PUT THIS INSIDE THE CONTEXT
-const RecentButtons = ['Low Pass Filter', 'High Pass Filter'];
+const RecentButtons = ['Filter', 'Signal Graph', 'Test'];
 
 // PUT THIS INSIDE THE CONTEXT
 const AvailableNodes = [
     {
-        label: 'Source Node',
+        label: 'Test',
         description: 'Drag this node anywhere on the page.',
         category: 'source',
     },
     {
-        label: 'Low Pass Filter',
+        label: 'Filter',
         description: 'Drag this node anywhere on the page.',
         category: 'filter',
     },
     {
-        label: 'High Pass Filter',
-        description: 'Drag this node anywhere on the page.',
-        category: 'filter',
-    },
-    {
-        label: 'Stress Prediction',
-        description: 'Drag this node anywhere on the page.',
-        category: 'ml',
-    },
-    {
-        label: 'Sync Chart',
+        label: 'Signal Graph',
         description: 'Drag this node anywhere on the page.',
         category: 'viz',
     },
+    // {
+    //     label: 'Stress Prediction',
+    //     description: 'Drag this node anywhere on the page.',
+    //     category: 'ml',
+    // },
 ];
 
 const uniqueCategories = [
@@ -48,6 +47,8 @@ const uniqueCategories = [
 ];
 
 export default function Sidebar() {
+    const { addNode } = useContext(MetaDataContext);
+    const reactFlowInstance = useReactFlow();
     const [dropCoords, setDropCoords] = useState<{
         x: number;
         y: number;
@@ -59,16 +60,41 @@ export default function Sidebar() {
         e: React.DragEvent<HTMLDivElement>,
         item: string
     ) => {
+        console.log(item);
         setDraggedItem(item);
     };
 
     useEffect(() => {
         const handleDrop = (e: DragEvent) => {
             e.preventDefault();
-            const x = e.clientX;
-            const y = e.clientY;
-            setDropCoords({ x, y });
-            console.log(`Dropped ${draggedItem} at X: ${x}, Y: ${y}`);
+
+            const reactFlowBounds = reactFlowInstance.getViewport();
+            const position = reactFlowInstance.screenToFlowPosition({
+                x: e.clientX,
+                y: e.clientY,
+            });
+
+            setDropCoords(position);
+
+            // Map node labels to their corresponding node types
+            const nodeTypeMap: { [key: string]: string } = {
+                Source: 'sourceNode',
+                Filter: 'filterNode',
+                'Signal Graph': 'signalGraphNode',
+            };
+
+            // Create new node when dropped
+            if (draggedItem && addNode) {
+                const newNode = {
+                    id: `${
+                        nodeTypeMap[draggedItem] || draggedItem
+                    }-${Date.now()}`,
+                    type: nodeTypeMap[draggedItem] || draggedItem, // Use mapped type or fallback to label
+                    position: position,
+                    data: {},
+                };
+                addNode(newNode);
+            }
         };
 
         const handleDragOver = (e: DragEvent) => {
@@ -82,7 +108,7 @@ export default function Sidebar() {
             window.removeEventListener('drop', handleDrop);
             window.removeEventListener('dragover', handleDragOver);
         };
-    }, [draggedItem]);
+    }, [draggedItem, addNode, reactFlowInstance]);
 
     return (
         <ResizablePanelGroup direction="horizontal" className="p-4">
@@ -102,7 +128,6 @@ export default function Sidebar() {
                                 className="pl-8"
                             />
                         </div>
-
                         {/* RECENT BUTTONS */}
                         <div>
                             <TypographyP>Recent</TypographyP>
@@ -129,7 +154,6 @@ export default function Sidebar() {
                                 );
                             })}
                         </div>
-
                         {/* CATEGORIES */}
                         <div>
                             {uniqueCategories.map((categoryName) => (
@@ -141,7 +165,8 @@ export default function Sidebar() {
                             ))}
                         </div>
 
-                        {/* DEBUG TOOL FOR COORDINATES OF DROP */}
+                        {/* DEBUG TOOL FOR COORDINATES OF DROP
+                        this uses the windows coordinate system, not the react flow coordinate system
                         <div>
                             {dropCoords && (
                                 <div
@@ -157,7 +182,7 @@ export default function Sidebar() {
                                     {dropCoords.y}
                                 </div>
                             )}
-                        </div>
+                        </div> */}
                     </CardContent>
                 </Card>
             </ResizablePanel>
