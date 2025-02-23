@@ -11,11 +11,8 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
-import FilterNode from '@/components/nodes/filter-node';
-import SignalGraphNode from '@/components/nodes/signal-graph-node';
 import { MetaDataContext } from '@/context/MetaDataContext';
 import Sidebar from '@/components/ui-sidebar/sidebar';
-import TestNode from '@/components/nodes/test-node';
 export default function ReactFlowView() {
     const { nodes, onNodesChange, edges, setEdges, onEdgesChange, nodeTypes } =
         useContext(MetaDataContext);

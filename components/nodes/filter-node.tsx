@@ -1,5 +1,5 @@
 'use client';
-import React, { memo } from 'react';
+import React from 'react';
 import * as Slider from '@radix-ui/react-slider';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import { cn } from '@/lib/utils';

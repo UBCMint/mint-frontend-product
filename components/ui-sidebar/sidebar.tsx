@@ -49,10 +49,6 @@ const uniqueCategories = [
 export default function Sidebar() {
     const { addNode } = useContext(MetaDataContext);
     const reactFlowInstance = useReactFlow();
-    const [dropCoords, setDropCoords] = useState<{
-        x: number;
-        y: number;
-    } | null>(null);
     const [draggedItem, setDraggedItem] = useState<string | null>(null);
 
     // Handle the drag start event
@@ -68,13 +64,12 @@ export default function Sidebar() {
         const handleDrop = (e: DragEvent) => {
             e.preventDefault();
 
-            const reactFlowBounds = reactFlowInstance.getViewport();
             const position = reactFlowInstance.screenToFlowPosition({
                 x: e.clientX,
                 y: e.clientY,
             });
 
-            setDropCoords(position);
+            // setDropCoords(position);
 
             // Map node labels to their corresponding node types
             const nodeTypeMap: { [key: string]: string } = {

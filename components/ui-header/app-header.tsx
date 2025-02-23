@@ -1,9 +1,5 @@
 import { Button } from '@/components/ui/button';
-import {
-    ExternalLinkIcon,
-    ChevronUpIcon,
-    ChevronDownIcon,
-} from '@radix-ui/react-icons';
+import { ExternalLinkIcon, ChevronUpIcon } from '@radix-ui/react-icons';
 import {
     DropdownMenu,
     DropdownMenuContent,
