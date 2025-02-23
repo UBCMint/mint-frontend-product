@@ -60,7 +60,7 @@ export function MetaDataContextProvider({
     children: ReactNode;
 }): JSX.Element {
     const [nodes, setNodes, onNodesChange] = useNodesState<NodeDefinition>([]);
-    const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+    const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
     const [nodeTypes, setNodeTypes] = useState<NodeTypes>(DEFAULT_NODE_TYPES);
 
     const addNode = (newNode: NodeDefinition) => {

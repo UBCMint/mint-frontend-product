@@ -40,7 +40,8 @@ export default function FilterNode() {
     const [value, setValue] = React.useState('');
     return (
         <div className="bg-white border border-black p-1 w-full rounded-sm">
-            <Handle type="target" position={Position.Top} />
+            <Handle type="target" position={Position.Left} />
+            <Handle type="source" position={Position.Right} />
             <div className="flex-row">
                 <Popover open={open} onOpenChange={setOpen}>
                     <PopoverTrigger asChild>
@@ -114,7 +115,6 @@ export default function FilterNode() {
                     />
                 </Slider.Root>
             </form>
-            <Handle type="source" position={Position.Bottom} />
         </div>
     );
 }

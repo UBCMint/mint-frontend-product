@@ -71,14 +71,14 @@ export default function SignalGraphNode() {
 
     return (
         <div className="relative">
-            <Handle type="target" position={Position.Top} />
+            <Handle type="target" position={Position.Left} />
+            <Handle type="source" position={Position.Right} />
             <div
                 onClick={handleClick}
                 className="cursor-pointer hover:opacity-80 transition-opacity w-[400px] h-[400px] bg-white p-4"
             >
                 <SignalGraph data={signalData} />
             </div>
-            <Handle type="source" position={Position.Bottom} />
         </div>
     );
 }
