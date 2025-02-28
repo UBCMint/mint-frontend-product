@@ -41,7 +41,7 @@ export default function ReactFlowView() {
                 fitView
             >
                 <Background />
-                <Controls />
+                <Controls position="top-right" />
                 <Panel position="top-left">
                     <Sidebar />
                 </Panel>
