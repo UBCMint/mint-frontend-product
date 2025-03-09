@@ -1,3 +1,4 @@
+'use client';
 import { Button } from '@/components/ui/button';
 import { ExternalLinkIcon, ChevronUpIcon } from '@radix-ui/react-icons';
 import {
@@ -6,8 +7,12 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useState } from "react";
 
 export default function AppHeader() {
+
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+
     return (
         <header className="flex justify-between items-center p-2 border-b h-16">
             {/* logo */}
@@ -37,13 +42,13 @@ export default function AppHeader() {
                 </Button>
 
                 {/* help */}
-                <DropdownMenu>
-                    <DropdownMenuTrigger>
+                <DropdownMenu onOpenChange={setIsOpen}>
+                    <DropdownMenuTrigger asChild>
                         <div className="flex items-center space-x-1 px-3 py-2">
                             <span className="text-sm font-medium leading-none">
                                 Help
                             </span>
-                            <ChevronUpIcon className="h-4 w-4" />
+                            <ChevronUpIcon className={`h-4 w-4 transform transition-transform duration-300 ${isOpen ? "rotate-180" : "rotate-0"}`} />
                         </div>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="mx-4">
