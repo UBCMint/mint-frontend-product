@@ -14,9 +14,10 @@ import { TypographyP } from '../typography/typography';
 import { MetaDataContext } from '@/context/MetaDataContext';
 import { useContext } from 'react';
 import { useReactFlow } from '@xyflow/react';
+import { Node } from '../types/node-type';
 
 // PUT THIS INSIDE THE CONTEXT
-const RecentButtons = ['Filter', 'Signal Graph', 'Test'];
+const RecentButtons : string[] = [];
 
 // PUT THIS INSIDE THE CONTEXT
 const AvailableNodes = [
@@ -60,6 +61,21 @@ export default function Sidebar() {
         setDraggedItem(item);
     };
 
+    const handleAddRecentButton = (label: string) => {
+        const index = RecentButtons.indexOf(label);
+        if (index > -1) {
+            RecentButtons.splice(index, 1); 
+        }
+    
+        RecentButtons.unshift(label);
+    
+        if (RecentButtons.length > 3) {
+            RecentButtons.pop(); 
+        }
+    };
+    
+    
+
     useEffect(() => {
         const handleDrop = (e: DragEvent) => {
             e.preventDefault();
@@ -89,6 +105,7 @@ export default function Sidebar() {
                     data: {},
                 };
                 addNode(newNode);
+                handleAddRecentButton(draggedItem);
             }
         };
 
@@ -156,6 +173,7 @@ export default function Sidebar() {
                                     key={categoryName}
                                     categoryName={categoryName}
                                     availableNodes={AvailableNodes}
+                                    onDragStart={handleDragStart}
                                 />
                             ))}
                         </div>
