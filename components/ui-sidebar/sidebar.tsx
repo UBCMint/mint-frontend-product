@@ -14,7 +14,6 @@ import { TypographyP } from '../typography/typography';
 import { MetaDataContext } from '@/context/MetaDataContext';
 import { useContext } from 'react';
 import { useReactFlow } from '@xyflow/react';
-import { Node } from '../types/node-type';
 
 // PUT THIS INSIDE THE CONTEXT
 const RecentButtons : string[] = [];
@@ -51,7 +50,7 @@ export default function Sidebar() {
     const { addNode } = useContext(MetaDataContext);
     const reactFlowInstance = useReactFlow();
     const [draggedItem, setDraggedItem] = useState<string | null>(null);
-
+    const [RecentButtons, setRecentButtons] = useState<string[]>([]);
     // Handle the drag start event
     const handleDragStart = (
         e: React.DragEvent<HTMLDivElement>,
@@ -62,16 +61,12 @@ export default function Sidebar() {
     };
 
     const handleAddRecentButton = (label: string) => {
-        const index = RecentButtons.indexOf(label);
-        if (index > -1) {
-            RecentButtons.splice(index, 1); 
-        }
-    
-        RecentButtons.unshift(label);
-    
-        if (RecentButtons.length > 3) {
-            RecentButtons.pop(); 
-        }
+        setRecentButtons((prevButtons) => {
+            const updatedButtons = prevButtons.filter((btn) => btn !== label);
+            updatedButtons.unshift(label);
+            if (updatedButtons.length > 3) updatedButtons.pop();
+            return updatedButtons;
+        });
     };
     
     
