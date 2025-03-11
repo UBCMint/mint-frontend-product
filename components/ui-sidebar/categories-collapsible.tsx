@@ -20,9 +20,10 @@ interface Node {
 interface CategoriesProps {
     categoryName: string;
     availableNodes: Node[];
+    onDragStart: (e: React.DragEvent<HTMLDivElement>, item: string) => void;
 }
 
-export function Categories({ categoryName, availableNodes }: CategoriesProps) {
+export function Categories({ categoryName, availableNodes, onDragStart }: CategoriesProps) {
     const [isOpen, setIsOpen] = React.useState(false);
 
     const categoryNodes = availableNodes.filter((node) => {
@@ -58,6 +59,9 @@ export function Categories({ categoryName, availableNodes }: CategoriesProps) {
                             label={node.label}
                             description={node.description}
                             draggable={true}
+                            onDragStart={(e) => 
+                                onDragStart(e, node.label)
+                            }
                         />
                     </div>
                 ))}

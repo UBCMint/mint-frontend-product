@@ -16,7 +16,7 @@ import { useContext } from 'react';
 import { useReactFlow } from '@xyflow/react';
 
 // PUT THIS INSIDE THE CONTEXT
-const RecentButtons = ['Filter', 'Signal Graph', 'Test'];
+const RecentButtons : string[] = [];
 
 // PUT THIS INSIDE THE CONTEXT
 const AvailableNodes = [
@@ -50,7 +50,7 @@ export default function Sidebar() {
     const { addNode } = useContext(MetaDataContext);
     const reactFlowInstance = useReactFlow();
     const [draggedItem, setDraggedItem] = useState<string | null>(null);
-
+    const [RecentButtons, setRecentButtons] = useState<string[]>([]);
     // Handle the drag start event
     const handleDragStart = (
         e: React.DragEvent<HTMLDivElement>,
@@ -59,6 +59,17 @@ export default function Sidebar() {
         console.log(item);
         setDraggedItem(item);
     };
+
+    const handleAddRecentButton = (label: string) => {
+        setRecentButtons((prevButtons) => {
+            const updatedButtons = prevButtons.filter((btn) => btn !== label);
+            updatedButtons.unshift(label);
+            if (updatedButtons.length > 3) updatedButtons.pop();
+            return updatedButtons;
+        });
+    };
+    
+    
 
     useEffect(() => {
         const handleDrop = (e: DragEvent) => {
@@ -89,6 +100,7 @@ export default function Sidebar() {
                     data: {},
                 };
                 addNode(newNode);
+                handleAddRecentButton(draggedItem);
             }
         };
 
@@ -156,6 +168,7 @@ export default function Sidebar() {
                                     key={categoryName}
                                     categoryName={categoryName}
                                     availableNodes={AvailableNodes}
+                                    onDragStart={handleDragStart}
                                 />
                             ))}
                         </div>
