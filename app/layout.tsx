@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
-import MetaDataContextProvider from '@/context/MetaDataContext';
 
 import AppHeader from '@/components/ui-header/app-header';
 import SettingsBar from '@/components/ui-header/settings-bar';
@@ -32,18 +31,16 @@ export default function RootLayout({
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
-                <MetaDataContextProvider>
-                    <div className="h-screen flex flex-col">
-                        {/* Top section for header and settings bar */}
-                        <div className="flex flex-col">
-                            <AppHeader />
-                            <SettingsBar />
-                        </div>
-
-                        {/* Bottom section for workspace and sidebar */}
-                        <div className="flex-1 flex">{children}</div>
+                <div className="h-screen flex flex-col">
+                    {/* Top section for header and settings bar */}
+                    <div className="flex flex-col">
+                        <AppHeader />
+                        <SettingsBar />
                     </div>
-                </MetaDataContextProvider>
+
+                    {/* Bottom section for workspace and sidebar */}
+                    <div className="flex-1 flex">{children}</div>
+                </div>
             </body>
         </html>
     );

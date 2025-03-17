@@ -1,51 +1,83 @@
 'use client';
 
-import React, { useCallback, useContext } from 'react';
+import React, { useRef, useEffect } from 'react';
 import {
     ReactFlow,
+    ReactFlowProvider,
     addEdge,
+    useNodesState,
+    useEdgesState,
     Controls,
+    useReactFlow,
     Background,
     Panel,
-    Connection,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
-import { MetaDataContext } from '@/context/MetaDataContext';
 import Sidebar from '@/components/ui-sidebar/sidebar';
-export default function ReactFlowView() {
-    const { nodes, onNodesChange, edges, setEdges, onEdgesChange, nodeTypes } =
-        useContext(MetaDataContext);
+import { FlowProvider, useFlowContext } from '@/context/FlowContext';
 
-    // const nodeTypes = {
-    //     testNode: TestNode,
-    //     filterNode: FilterNode,
-    //     signalGraphNode: SignalGraphNode,
-    // };
+const initialNodes = [
+    {
+        id: '1',
+        type: 'input',
+        data: { label: 'input node' },
+        position: { x: 250, y: 5 },
+    },
+];
 
-    // Use correct type for `params`
-    const onConnect = useCallback(
-        (params: Connection) => setEdges((eds) => addEdge(params, eds)),
-        [setEdges]
-    );
+let id = 0;
+const getId = () => `dndnode_${id++}`;
+
+const ReactFlowView = () => {
+    const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+    const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+    const { screenToFlowPosition } = useReactFlow();
+    const { type, onDragOver, onDrop } = useFlowContext();
+
+    useEffect(() => {
+        console.log('FlowContext type:', type);
+    }, [type]);
+
+    const onConnect = (params) => {
+        setEdges((eds) => addEdge(params, eds));
+    };
 
     return (
-        <div style={{ width: '100vw', height: '100vh', position: 'relative' }}>
-            <ReactFlow
-                nodes={nodes}
-                edges={edges}
-                onNodesChange={onNodesChange}
-                onEdgesChange={onEdgesChange}
-                onConnect={onConnect}
-                nodeTypes={nodeTypes}
-                fitView
+        <div>
+            <div
+                style={{
+                    width: '100vw',
+                    height: '100vh',
+                    position: 'relative',
+                }}
             >
-                <Background />
-                <Controls position="top-right" />
-                <Panel position="top-left">
-                    <Sidebar />
-                </Panel>
-            </ReactFlow>
+                <ReactFlow
+                    nodes={nodes}
+                    edges={edges}
+                    onNodesChange={onNodesChange}
+                    onEdgesChange={onEdgesChange}
+                    onConnect={onConnect}
+                    onDrop={onDrop}
+                    onDragOver={onDragOver}
+                    fitView
+                    style={{ backgroundColor: '#F7F9FB' }}
+                >
+                    <Controls position="top-right" />
+                    <Panel position="top-left">
+                        <Sidebar />
+                    </Panel>
+                    <Background />
+                </ReactFlow>
+            </div>
         </div>
     );
-}
+};
+
+export default () => (
+    <ReactFlowProvider>
+        <FlowProvider>
+            <ReactFlowView />
+        </FlowProvider>
+    </ReactFlowProvider>
+);

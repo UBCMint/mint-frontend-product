@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from 'react';
 import { CaretDownIcon, CaretUpIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
@@ -8,10 +6,10 @@ import {
     CollapsibleContent,
     CollapsibleTrigger,
 } from '@/components/ui/collapsible';
-import RecentButton from './node-button';
+import NodeButton from './node-button';
 
-// Define the node type
 interface Node {
+    id: string;
     label: string;
     description: string;
     category: string;
@@ -20,10 +18,9 @@ interface Node {
 interface CategoriesProps {
     categoryName: string;
     availableNodes: Node[];
-    onDragStart: (e: React.DragEvent<HTMLDivElement>, item: string) => void;
 }
 
-export function Categories({ categoryName, availableNodes, onDragStart }: CategoriesProps) {
+export function Categories({ categoryName, availableNodes }: CategoriesProps) {
     const [isOpen, setIsOpen] = React.useState(false);
 
     const categoryNodes = availableNodes.filter((node) => {
@@ -55,13 +52,10 @@ export function Categories({ categoryName, availableNodes, onDragStart }: Catego
             <CollapsibleContent className="space-y-2">
                 {categoryNodes.map((node, index) => (
                     <div key={index} className="mb-4">
-                        <RecentButton
+                        <NodeButton
+                            id={node.id}
                             label={node.label}
                             description={node.description}
-                            draggable={true}
-                            onDragStart={(e) => 
-                                onDragStart(e, node.label)
-                            }
                         />
                     </div>
                 ))}

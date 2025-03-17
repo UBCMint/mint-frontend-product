@@ -7,29 +7,35 @@ import {
 } from '@/components/ui/hover-card';
 import { InfoCircledIcon } from '@radix-ui/react-icons';
 import DotGrid from '@/components/radix/dotgrid';
+import { useFlowContext } from '@/context/FlowContext';
 
-interface RecentButtonProps {
-    label?: string;
-    description?: string;
-    draggable?: boolean;
-    onDragStart?: (e: React.DragEvent<HTMLDivElement>) => void;
+interface ButtonProps {
+    id: string;
+    label: string;
+    description: string;
 }
 
-// black info button
 const InfoIcon = () => (
     <div className="w-3 h-3 rounded-full bg-black flex items-center justify-center cursor-pointer">
         <InfoCircledIcon className="w-6 h-6 text-white" />
     </div>
 );
 
-const NodeButton = ({
-    label = 'Default Label',
-    description = 'Default Description',
-    draggable = false,
-    onDragStart,
-}: RecentButtonProps) => {
+const NodeButton = ({ id, label, description }: ButtonProps) => {
+    const { setType } = useFlowContext();
+
+    const onDragStart = (event, nodeType) => {
+        console.log('Dragging:', nodeType);
+        setType(nodeType);
+        event.dataTransfer.effectAllowed = 'move';
+    };
+
     return (
-        <div className="w-full" draggable={draggable} onDragStart={onDragStart}>
+        <div
+            className="w-full"
+            onDragStart={(event) => onDragStart(event, id)}
+            draggable
+        >
             <Button variant="outline" className="w-full h-16 justify-between">
                 <div className="flex items-center">
                     <DotGrid />
