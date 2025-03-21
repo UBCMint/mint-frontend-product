@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import {
     ReactFlow,
     ReactFlowProvider,
@@ -15,69 +15,81 @@ import {
 import '@xyflow/react/dist/style.css';
 
 import Sidebar from '@/components/ui-sidebar/sidebar';
-import { FlowProvider, useFlowContext } from '@/context/FlowContext';
-
-const initialNodes = [
-    {
-        id: '1',
-        type: 'input',
-        data: { label: 'input node' },
-        position: { x: 250, y: 5 },
-    },
-];
 
 let id = 0;
-const getId = () => `dndnode_${id++}`;
+const getId = () => `node_${id++}`;
 
-const ReactFlowView = () => {
-    const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+const ReactFlowInterface = () => {
+    const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const { screenToFlowPosition } = useReactFlow();
-    const { type, onDragOver, onDrop } = useFlowContext();
 
-    useEffect(() => {
-        console.log('FlowContext type:', type);
-    }, [type]);
-
-    const onConnect = (params) => {
+    const onConnect = (params: any) => {
         setEdges((eds) => addEdge(params, eds));
     };
 
+    const onDragOver = (event: React.DragEvent) => {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = 'move';
+    };
+
+    const onDrop = (event: React.DragEvent) => {
+        event.preventDefault();
+
+        const nodeType = event.dataTransfer.getData('application/reactflow');
+        console.log('Dropped nodeType:', nodeType);
+
+        if (!nodeType) {
+            return;
+        }
+
+        const position = screenToFlowPosition({
+            x: event.clientX,
+            y: event.clientY,
+        });
+        const newNode = {
+            id: getId(),
+            nodeType,
+            position,
+            data: { label: `${nodeType}` },
+        };
+
+        setNodes((nds) => nds.concat(newNode));
+    };
+
     return (
-        <div>
-            <div
-                style={{
-                    width: '100vw',
-                    height: '100vh',
-                    position: 'relative',
-                }}
+        <div
+            style={{
+                width: '100vw',
+                height: '100vh',
+                position: 'relative',
+            }}
+        >
+            <ReactFlow
+                nodes={nodes}
+                edges={edges}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
+                onConnect={onConnect}
+                onDrop={onDrop}
+                onDragOver={onDragOver}
+                fitView
+                style={{ backgroundColor: '#F7F9FB' }}
             >
-                <ReactFlow
-                    nodes={nodes}
-                    edges={edges}
-                    onNodesChange={onNodesChange}
-                    onEdgesChange={onEdgesChange}
-                    onConnect={onConnect}
-                    onDrop={onDrop}
-                    onDragOver={onDragOver}
-                    fitView
-                    style={{ backgroundColor: '#F7F9FB' }}
-                >
-                    <Controls position="top-right" />
-                    <Panel position="top-left">
-                        <Sidebar />
-                    </Panel>
-                    <Background />
-                </ReactFlow>
-            </div>
+                <Controls position="top-right" />
+                <Panel position="top-left">
+                    <Sidebar />
+                </Panel>
+                <Background />
+            </ReactFlow>
         </div>
     );
 };
 
-export default () => (
-    <ReactFlowProvider>
-        <FlowProvider>
-            <ReactFlowView />
-        </FlowProvider>
-    </ReactFlowProvider>
-);
+export default function ReactFlowView() {
+    return (
+        <ReactFlowProvider>
+            <ReactFlowInterface />
+        </ReactFlowProvider>
+    );
+}

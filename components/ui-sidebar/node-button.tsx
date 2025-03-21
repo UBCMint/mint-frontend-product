@@ -7,7 +7,6 @@ import {
 } from '@/components/ui/hover-card';
 import { InfoCircledIcon } from '@radix-ui/react-icons';
 import DotGrid from '@/components/radix/dotgrid';
-import { useFlowContext } from '@/context/FlowContext';
 
 interface ButtonProps {
     id: string;
@@ -22,11 +21,12 @@ const InfoIcon = () => (
 );
 
 const NodeButton = ({ id, label, description }: ButtonProps) => {
-    const { setType } = useFlowContext();
-
-    const onDragStart = (event, nodeType) => {
+    const onDragStart = (
+        event: React.DragEvent<HTMLDivElement>,
+        nodeType: string
+    ) => {
         console.log('Dragging:', nodeType);
-        setType(nodeType);
+        event.dataTransfer.setData('application/reactflow', nodeType);
         event.dataTransfer.effectAllowed = 'move';
     };
 
