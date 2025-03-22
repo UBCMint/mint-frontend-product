@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useCallback } from 'react';
+import React from 'react';
 import {
     ReactFlow,
     ReactFlowProvider,
@@ -13,8 +13,18 @@ import {
     Panel,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
+import SourceNode from '@/components/nodes/source-node';
+import FilterNode from '@/components/nodes/filter-node/filter-node';
+import SignalGraphNode from '@/components/nodes/signal-graph-node/signal-graph-node';
+import type { Node } from '@xyflow/react';
 
 import Sidebar from '@/components/ui-sidebar/sidebar';
+
+const nodeTypes = {
+    'source-node': SourceNode,
+    'filter-node': FilterNode,
+    'signal-graph-node': SignalGraphNode,
+};
 
 let id = 0;
 const getId = () => `node_${id++}`;
@@ -47,9 +57,10 @@ const ReactFlowInterface = () => {
             x: event.clientX,
             y: event.clientY,
         });
-        const newNode = {
+
+        const newNode: Node = {
             id: getId(),
-            nodeType,
+            type: nodeType,
             position,
             data: { label: `${nodeType}` },
         };
@@ -75,6 +86,7 @@ const ReactFlowInterface = () => {
                 onDragOver={onDragOver}
                 fitView
                 style={{ backgroundColor: '#F7F9FB' }}
+                nodeTypes={nodeTypes}
             >
                 <Controls position="top-right" />
                 <Panel position="top-left">

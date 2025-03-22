@@ -7,11 +7,29 @@ import {
 } from '@/components/ui/resizable';
 import Cross1 from '@/components/radix/cross1';
 import { Categories } from './categories-collapsible';
-import { FlowProvider, useFlowContext } from '@/context/FlowContext';
 
 const Sidebar = () => {
-    const recentButtons = [];
-    const { AvailableNodes } = useFlowContext();
+    const AvailableNodes = [
+        {
+            id: 'source-node',
+            label: 'Source',
+            description: 'Drag this node anywhere on the page.',
+            category: 'Settings',
+        },
+        {
+            id: 'filter-node',
+            label: 'Filter',
+            description: 'Drag this node anywhere on the page.',
+            category: 'Filters',
+        },
+        {
+            id: 'signal-graph-node',
+            label: 'Signal Graph',
+            description: 'Drag this node anywhere on the page.',
+            category: 'Visualizations',
+        },
+    ];
+
     const uniqueCategories = [
         ...new Set(AvailableNodes.map((node) => node.category)),
     ];
@@ -45,7 +63,7 @@ const Sidebar = () => {
 };
 
 export default () => (
-    <FlowProvider>
+    <>
         <Sidebar />
-    </FlowProvider>
+    </>
 );
