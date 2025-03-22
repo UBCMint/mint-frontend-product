@@ -1,11 +1,4 @@
-import {
-    LineChart,
-    Line,
-    CartesianGrid,
-    ResponsiveContainer,
-    XAxis,
-    YAxis,
-} from 'recharts';
+import { LineChart, Line, CartesianGrid, ResponsiveContainer } from 'recharts';
 
 interface SignalGraphPreviewProps {
     data: {
@@ -19,8 +12,6 @@ interface SignalGraphPreviewProps {
 }
 
 export default function SignalGraphPreview({ data }: SignalGraphPreviewProps) {
-    console.log(data);
-
     return (
         <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data}>

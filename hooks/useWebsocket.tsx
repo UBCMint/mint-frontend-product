@@ -1,16 +1,18 @@
 import { useEffect, useState, useRef } from 'react';
+import { useGlobalContext } from '@/context/GlobalContext';
 
 export default function useWebsocket(
     chartSize: number,
-    batchesPerSecond: number,
-    isStreaming: boolean
+    batchesPerSecond: number
 ) {
+    const { dataStreaming } = useGlobalContext();
     const [renderData, setRenderData] = useState<any[] | []>([]); //  batch data here
     const bufferRef = useRef<any[]>([]); // all data here
     const intervalTime = 1000 / batchesPerSecond;
 
     useEffect(() => {
-        if (!isStreaming) return;
+        console.log('data streaming:', dataStreaming);
+        if (!dataStreaming) return;
 
         const ws = new WebSocket('ws://localhost:8080');
 
@@ -37,7 +39,7 @@ export default function useWebsocket(
             ws.close();
             clearInterval(intervalId);
         };
-    }, [chartSize, batchesPerSecond, isStreaming]); // re-run when either parameter changes
+    }, [chartSize, batchesPerSecond, dataStreaming]); // re-run when either parameter changes
 
     return { renderData };
 }
