@@ -17,15 +17,12 @@ interface SignalData {
     signal5: number;
 }
 
-interface SignalTableProps {
+interface DataTableProps {
     rowCount?: number;
     data?: SignalData[];
 }
 
-const SignalTable: React.FC<SignalTableProps> = ({
-    rowCount = 8,
-    data = [],
-}) => {
+const DataTable: React.FC<DataTableProps> = ({ rowCount = 8, data = [] }) => {
     const rows = Array(rowCount)
         .fill(null)
         .map((_, index) => {
@@ -42,7 +39,7 @@ const SignalTable: React.FC<SignalTableProps> = ({
         });
 
     return (
-        <div className="w-full border rounded-lg overflow-hidden">
+        <div className="w-full overflow-hidden">
             <Table>
                 <TableHeader>
                     <TableRow className="bg-sky-50">
@@ -100,4 +97,4 @@ const SignalTable: React.FC<SignalTableProps> = ({
     );
 };
 
-export default SignalTable;
+export default DataTable;
