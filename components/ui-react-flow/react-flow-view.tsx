@@ -11,12 +11,12 @@ import {
     useReactFlow,
     Background,
     Panel,
+    Connection,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import SourceNode from '@/components/nodes/source-node';
 import FilterNode from '@/components/nodes/filter-node/filter-node';
 import SignalGraphNode from '@/components/nodes/signal-graph-node/signal-graph-node';
-import type { Node } from '@xyflow/react';
 
 import Sidebar from '@/components/ui-sidebar/sidebar';
 
@@ -34,16 +34,16 @@ const ReactFlowInterface = () => {
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const { screenToFlowPosition } = useReactFlow();
 
-    const onConnect = (params: any) => {
+    const onConnect = (params: Connection) => {
         setEdges((eds) => addEdge(params, eds));
     };
 
-    const onDragOver = (event: React.DragEvent) => {
+    const onDragOver = (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();
         event.dataTransfer.dropEffect = 'move';
     };
 
-    const onDrop = (event: React.DragEvent) => {
+    const onDrop = (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();
 
         const nodeType = event.dataTransfer.getData('application/reactflow');
@@ -58,14 +58,14 @@ const ReactFlowInterface = () => {
             y: event.clientY,
         });
 
-        const newNode: Node = {
+        const newNode = {
             id: getId(),
             type: nodeType,
             position,
             data: { label: `${nodeType}` },
         };
 
-        setNodes((nds) => nds.concat(newNode));
+        setNodes((nds) => [...nds, newNode]);
     };
 
     return (

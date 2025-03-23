@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Handle, Position } from '@xyflow/react';
 import SignalGraphPreview from './signal-graph-preview';
@@ -13,9 +12,8 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog';
 import SignalGraphView from './signal-graph-full';
-import { GlobalProvider, useGlobalContext } from '@/context/GlobalContext';
 
-const SignalGraphNode = () => {
+export default function SignalGraphNode() {
     const { renderData } = useWebsocket(20, 10);
 
     const processedData = renderData.map((item) => ({
@@ -53,8 +51,4 @@ const SignalGraphNode = () => {
             </Dialog>
         </Card>
     );
-};
-
-export default () => {
-    return <SignalGraphNode />;
-};
+}

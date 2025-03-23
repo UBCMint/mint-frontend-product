@@ -7,19 +7,21 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useState } from "react";
+import { useState } from 'react';
+import Image from 'next/image';
 
 export default function AppHeader() {
-
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     return (
         <header className="flex justify-between items-center p-2 border-b h-16">
             {/* logo */}
             <div className="flex items-center">
-                <img
-                    src="https://ubcmint.github.io/img/main-page/mint-logo.png"
+                <Image
+                    src="/mint-logo.png"
                     alt="Logo"
+                    width={56}
+                    height={56}
                     className="h-14"
                 />
             </div>
@@ -48,7 +50,11 @@ export default function AppHeader() {
                             <span className="text-sm font-medium leading-none">
                                 Help
                             </span>
-                            <ChevronUpIcon className={`h-4 w-4 transform transition-transform duration-300 ${isOpen ? "rotate-180" : "rotate-0"}`} />
+                            <ChevronUpIcon
+                                className={`h-4 w-4 transform transition-transform duration-300 ${
+                                    isOpen ? 'rotate-180' : 'rotate-0'
+                                }`}
+                            />
                         </div>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="mx-4">

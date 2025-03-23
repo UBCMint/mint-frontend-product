@@ -1,12 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { Menubar, MenubarMenu, MenubarTrigger } from '@/components/ui/menubar';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
-import { GlobalProvider, useGlobalContext } from '@/context/GlobalContext';
+import { useGlobalContext } from '@/context/GlobalContext';
 
-const SettingsBar = () => {
+export default function SettingsBar() {
     const { dataStreaming, setDataStreaming } = useGlobalContext();
 
     // useEffect(() => {
@@ -50,8 +49,4 @@ const SettingsBar = () => {
             </div>
         </div>
     );
-};
-
-export default () => {
-    return <SettingsBar />;
-};
+}

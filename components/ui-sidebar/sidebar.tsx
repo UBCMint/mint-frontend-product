@@ -8,7 +8,7 @@ import {
 import Cross1 from '@/components/radix/cross1';
 import { Categories } from './categories-collapsible';
 
-const Sidebar = () => {
+export default function Sidebar() {
     const AvailableNodes = [
         {
             id: 'source-node',
@@ -60,10 +60,4 @@ const Sidebar = () => {
             <ResizablePanel defaultSize={99} />
         </ResizablePanelGroup>
     );
-};
-
-export default () => (
-    <>
-        <Sidebar />
-    </>
-);
+}
