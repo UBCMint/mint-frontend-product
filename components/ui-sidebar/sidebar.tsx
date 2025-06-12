@@ -8,7 +8,13 @@ import {
 import Cross1 from '@/components/radix/cross1';
 import { Categories } from './categories-collapsible';
 
+import {
+    Command,
+    CommandInput,
+} from '@/components/ui/command';
+
 export default function Sidebar() {
+
     const AvailableNodes = [
         {
             id: 'source-node',
@@ -39,8 +45,18 @@ export default function Sidebar() {
             <ResizablePanel className="min-w-fit" defaultSize={1}>
                 <Card className="max-h-[calc(100vh-2rem)] flex flex-col">
                     <CardHeader className="flex flex-row items-center justify-between">
-                        <CardTitle>Nodes</CardTitle>
+                        <CardTitle className="text-3xl font-bold">Nodes</CardTitle>
                         <Cross1 />
+                    </CardHeader>
+
+                    <div className="flex justify-center px-4 pb-2">
+                        <Command className=" rounded-lg border shadow-none">
+                            <CommandInput placeholder="Search" />
+                        </Command>
+                    </div>
+
+                    <CardHeader className="flex flex-row items-center justify-between">
+                        <CardTitle className="text-2xl font-bold">Recent</CardTitle>
                     </CardHeader>
 
                     <CardContent className="overflow-y-auto flex-1">
