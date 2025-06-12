@@ -7,8 +7,9 @@ Currently working on:
 
 Quick start:
 
-1. `npm install`
-2. `npm run dev`
+1. Run `npm install` to install node dependencies
+2. Run `npm run dev` to start react app on [http://localhost:3000/](http://localhost:3000/)
+3. Open another terminal and run `node server.js` to start mock server to send signals
 
 References:
 
