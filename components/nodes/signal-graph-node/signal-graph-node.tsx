@@ -1,5 +1,5 @@
 import { Card } from '@/components/ui/card';
-import { Handle, Position } from '@xyflow/react';
+import { getIncomers, Handle, Node, Position, useReactFlow } from '@xyflow/react';
 import SignalGraphPreview from './signal-graph-preview';
 import useWebsocket from '@/hooks/useWebsocket';
 
@@ -25,6 +25,27 @@ export default function SignalGraphNode() {
         signal5: item.signals[4],
     }));
 
+    const { getEdges, getNodes } = useReactFlow();
+    const nodes = getNodes();
+    const edges = getEdges();
+
+    const areNodeTypesConnected = (nodes: any[], edges: any[], typeA: string, typeB: string) => {
+        const nodeMap = Object.fromEntries(nodes.map((n) => [n.id, n]));
+      
+        return edges.some((edge) => {
+          const sourceNode = nodeMap[edge.source];
+          const targetNode = nodeMap[edge.target];
+      
+          return (sourceNode?.type === typeA && targetNode?.type === typeB);
+        });
+    };
+
+    const connected = areNodeTypesConnected(nodes, edges, 'source-node', 'signal-graph-node');
+
+    if (connected) {
+        console.log('At least one inputNode is connected to an outputNode');
+    }       
+
     return (
         <Card>
             <Handle type="target" position={Position.Left} />
@@ -32,7 +53,7 @@ export default function SignalGraphNode() {
             <Dialog>
                 <DialogTrigger>
                     <div className="w-[400px] h-[400px]">
-                        <SignalGraphPreview data={processedData} />
+                        <SignalGraphPreview data={connected? processedData : []} />
                     </div>
                 </DialogTrigger>
                 <DialogContent className="w-[80vw] h-[80vh] max-w-none max-h-none">
@@ -44,7 +65,7 @@ export default function SignalGraphNode() {
                     </DialogHeader>
                     <Card>
                         <div className="w-full h-full">
-                            <SignalGraphView data={processedData} />
+                            <SignalGraphView data={connected? processedData : []} />
                         </div>
                     </Card>
                 </DialogContent>
