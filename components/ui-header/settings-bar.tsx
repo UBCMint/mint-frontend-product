@@ -41,6 +41,9 @@ export default function SettingsBar() {
                 <Button
                     onClick={handleStartStop}
                     className={dataStreaming ? 'bg-red-500' : 'bg-green-500'}
+                    style={{
+                        backgroundColor: dataStreaming ? '#F44336' : '#2E7B75',
+                      }}
                 >
                     {dataStreaming ? 'Stop Data Stream' : 'Start Data Stream'}
                 </Button>
