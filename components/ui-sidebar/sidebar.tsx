@@ -65,7 +65,7 @@ export default function Sidebar() {
                         />
                     </div>
 
-                    <CardContent className="overflow-y-auto flex-1 ">
+                    <CardContent className="overflow-y-auto flex-1 flex flex-col gap-1">
                         {searchTerm &&
                             filteredNodes.map((node) => (
                                 <NodeButton
