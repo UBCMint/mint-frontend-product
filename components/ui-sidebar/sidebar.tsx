@@ -7,11 +7,10 @@ import {
 } from '@/components/ui/resizable';
 import Cross1 from '@/components/radix/cross1';
 import { Categories } from './categories-collapsible';
+import NodeButton from './node-button';
+import React, { useState } from 'react';
+import { Search } from "lucide-react"
 
-import {
-    Command,
-    CommandInput,
-} from '@/components/ui/command';
 
 export default function Sidebar() {
 
@@ -36,6 +35,12 @@ export default function Sidebar() {
         },
     ];
 
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const filteredNodes = AvailableNodes.filter((node) =>
+        node.label.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     const uniqueCategories = [
         ...new Set(AvailableNodes.map((node) => node.category)),
     ];
@@ -45,19 +50,34 @@ export default function Sidebar() {
             <ResizablePanel className="min-w-fit" defaultSize={1}>
                 <Card className="max-h-[calc(100vh-2rem)] flex flex-col">
                     <CardHeader className="flex flex-row items-center justify-between">
-                        <CardTitle className="text-3xl font-bold">Nodes</CardTitle>
+                        <CardTitle>Nodes</CardTitle>
                         <Cross1 />
                     </CardHeader>
 
-                    <div className="flex justify-center px-4 pb-2">
-                        <Command className=" rounded-lg border shadow-none">
-                            <CommandInput placeholder="Search" />
-                        </Command>
+                    <div className="flex items-center rounded-md border px-4 py-2 shadow-sm text-sm mx-4 mb-2">
+                        <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+                        <input
+                            type="text"
+                            placeholder="Search"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="outline-none"
+                        />
                     </div>
 
-                    <CardHeader className="flex flex-row items-center justify-between">
-                        <CardTitle className="text-2xl font-bold">Recent</CardTitle>
-                    </CardHeader>
+                    <CardContent className="overflow-y-auto flex-1 ">
+                        {searchTerm &&
+                            filteredNodes.map((node) => (
+                                <NodeButton
+                                    key={node.id}
+                                    id={node.id}
+                                    label={node.label}
+                                    description={node.description}
+                                />
+                            ))}
+                    </CardContent>
+
+                    <CardHeader className="pt-0">Recent</CardHeader>
 
                     <CardContent className="overflow-y-auto flex-1">
                         <div>
