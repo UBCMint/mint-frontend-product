@@ -9,7 +9,7 @@ import Cross1 from '@/components/radix/cross1';
 import { Categories } from './categories-collapsible';
 import NodeButton from './node-button';
 import React, { useState } from 'react';
-import { Search } from "lucide-react"
+import { Input } from '@/components/ui/input';
 
 
 export default function Sidebar() {
@@ -54,14 +54,13 @@ export default function Sidebar() {
                         <Cross1 />
                     </CardHeader>
 
-                    <div className="flex items-center rounded-md border px-4 py-2 shadow-sm text-sm mx-4 mb-2">
-                        <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
-                        <input
+                    <div className='pb-2'>
+                        <Input
                             type="text"
                             placeholder="Search"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="outline-none"
+                            className="items-center px-7 py-2 mx-4"
                         />
                     </div>
 
