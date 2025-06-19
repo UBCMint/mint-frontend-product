@@ -76,7 +76,7 @@ export default function Sidebar() {
                             ))}
                     </CardContent>
 
-                    <CardHeader className="pt-0">Recent</CardHeader>
+                    <CardHeader className="pt-0 pb-2">Recent</CardHeader>
 
                     <CardContent className="overflow-y-auto flex-1">
                         <div>
