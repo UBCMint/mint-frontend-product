@@ -40,11 +40,11 @@ export default function SettingsBar() {
             <div className="flex space-x-2">
                 <Button
                     onClick={handleStartStop}
-                    className={dataStreaming ? 'bg-red-500' : 'bg-green-500'}
+                    className={dataStreaming ? 'bg-red-500' : 'bg-[#2E7B75]'}
                 >
                     {dataStreaming ? 'Stop Data Stream' : 'Start Data Stream'}
                 </Button>
-                <Button variant="outline">Load</Button>
+                <Button variant="outline">Reset</Button>
                 <Button variant="outline">Save</Button>
             </div>
         </div>
