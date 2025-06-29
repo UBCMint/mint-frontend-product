@@ -1,4 +1,6 @@
-# MOSS Frontend
+# REPO has been migrated elsewhere. Click [here](https://github.com/UBCMint/fullstack-moss-app) to check it out!
+-----
+## MOSS Frontend
 
 Currently working on:
 
