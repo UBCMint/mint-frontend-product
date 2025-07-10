@@ -89,7 +89,7 @@ const ReactFlowInterface = () => {
                 nodeTypes={nodeTypes}
             >
                 <Controls position="top-right" />
-                <Panel position="top-left">
+                <Panel position="top-left" style={{ width: '800px'}}>
                     <Sidebar />
                 </Panel>
                 <Background />

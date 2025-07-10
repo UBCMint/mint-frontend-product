@@ -12,6 +12,7 @@ import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 
 
+
 export default function Sidebar() {
 
     const AvailableNodes = [
@@ -46,7 +47,7 @@ export default function Sidebar() {
     ];
 
     return (
-        <ResizablePanelGroup direction="horizontal" className="p-4">
+        <ResizablePanelGroup direction="horizontal" className="p-4" >
             <ResizablePanel className="min-w-fit" defaultSize={1}>
                 <Card className="max-h-[calc(100vh-2rem)] flex flex-col">
                     <CardHeader className="flex flex-row items-center justify-between">
@@ -91,6 +92,7 @@ export default function Sidebar() {
                     </CardContent>
                 </Card>
             </ResizablePanel>
+            <ResizableHandle withHandle/>
             <ResizableHandle className="bg-border-none" />
             <ResizablePanel defaultSize={99} />
         </ResizablePanelGroup>
